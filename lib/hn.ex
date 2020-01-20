@@ -1,6 +1,6 @@
 defmodule HN do
   @moduledoc """
-  A simple Hacker News API client in Elixir.
+  A simple Hacker News API client in Elixir. All API calls have a corresponding unsafe version.
 
   See https://github.com/HackerNews/API for a thorough description of the API and the fields returned from the various calls.
   """
@@ -15,7 +15,7 @@ defmodule HN do
   plug(HN.MiddleWare.Decode)
 
   @doc """
-  Fetch an item by id. Returns an HN.Item.
+  Fetch an item by id. Returns {:ok, %HN.Item{}}.
 
   ## Example
 
@@ -39,6 +39,7 @@ defmodule HN do
            type: "story",
            url: "http://www.getdropbox.com/u/2/screencast.html"
       }}
+
   """
   def item(id) when is_integer(id) do
     get("/item/" <> Integer.to_string(id) <> ".json", opts: [decode_as: %Item{}])
@@ -46,6 +47,13 @@ defmodule HN do
 
   def item(id) do
     get("/item/" <> id <> ".json", opts: [decode_as: %Item{}])
+  end
+
+  def item!(id) do
+    case item(id) do
+      {:ok, item} -> item
+      {_, error} -> raise(RuntimeError, error)
+    end
   end
 
   @doc """
@@ -68,6 +76,13 @@ defmodule HN do
     get("/user/" <> name <> ".json", opts: [decode_as: %User{}])
   end
 
+  def user!(name) do
+    case user(name) do
+      {:ok, user} -> user
+      {_, error} -> raise(RuntimeError, error)
+    end
+  end
+
   @doc """
   Fetch the most recent item id.
 
@@ -79,8 +94,22 @@ defmodule HN do
     get("/maxitem.json")
   end
 
+  def max_item! do
+    case max_item() do
+      {:ok, id} -> id
+      {_, error} -> raise(RuntimeError, error)
+    end
+  end
+
   defp stories(type) do
     get("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
+  end
+
+  defp stories!(type) do
+    case stories(type) do
+      {:ok, stories} -> stories
+      {_, error} -> raise(RuntimeError, error)
+    end
   end
 
   @doc """
@@ -91,6 +120,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def new_stories, do: stories(:new)
+  def new_stories!, do: stories!(:new)
 
   @doc """
   Fetch a list of top story ids.
@@ -100,6 +130,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def top_stories, do: stories(:top)
+  def top_stories!, do: stories!(:top)
 
   @doc """
   Fetch a list of best story ids.
@@ -109,6 +140,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def best_stories, do: stories(:best)
+  def best_stories!, do: stories!(:best)
 
   @doc """
   Fetch a list of ask story ids.
@@ -118,6 +150,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def ask_stories, do: stories(:ask)
+  def ask_stories!, do: stories!(:ask)
 
   @doc """
   Fetch a list of show story ids.
@@ -127,6 +160,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def show_stories, do: stories(:show)
+  def show_stories!, do: stories!(:show)
 
   @doc """
   Fetch a list of job story ids.
@@ -136,6 +170,7 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def job_stories, do: stories(:job)
+  def job_stories!, do: stories!(:job)
 
   @doc """
   Fetch recent item and profile changes.
@@ -150,5 +185,12 @@ defmodule HN do
   """
   def updates do
     get("/updates.json", opts: [decode_as: %Updates{}])
+  end
+
+  def updates! do
+    case updates() do
+      {:ok, update} -> update
+      {_, error} -> raise(RuntimeError, error)
+    end
   end
 end
