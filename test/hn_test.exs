@@ -1,5 +1,6 @@
 defmodule HNTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+
   doctest HN
 
   setup do
@@ -70,5 +71,43 @@ defmodule HNTest do
     end)
 
     :ok
+  end
+
+  test "fetch an item" do
+    {:ok, item} = HN.item(8863)
+    assert item.by == "dhouston"
+    assert item.id == 8863
+    assert item === HN.item!("8863")
+  end
+
+  test "fetch a user" do
+    {:ok, user} = HN.user("jl")
+    assert user.id == "jl"
+    assert user === HN.user!("jl")
+  end
+
+  test "fetch the max item id" do
+    {:ok, max_item} = HN.max_item()
+    assert max_item === HN.max_item!()
+  end
+
+  test "fetch stories" do
+    {:ok, new_stories} = HN.new_stories()
+    assert new_stories === HN.new_stories!()
+
+    {:ok, top_stories} = HN.top_stories()
+    assert top_stories === HN.top_stories!()
+
+    {:ok, best_stories} = HN.best_stories()
+    assert best_stories === HN.best_stories!()
+
+    {:ok, ask_stories} = HN.ask_stories()
+    assert ask_stories === HN.ask_stories!()
+
+    {:ok, show_stories} = HN.show_stories()
+    assert show_stories === HN.show_stories!()
+
+    {:ok, job_stories} = HN.job_stories()
+    assert job_stories === HN.job_stories!()
   end
 end
