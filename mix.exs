@@ -4,7 +4,7 @@ defmodule HN.MixProject do
   def project do
     [
       app: :hn_ex,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.9",
       source_url: "https://github.com/joshrotenberg/hn_ex",
       start_permanent: Mix.env() == :prod,
