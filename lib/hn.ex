@@ -5,7 +5,7 @@ defmodule HN do
   See https://github.com/HackerNews/API for a thorough description of the API and the fields returned from the various calls.
   """
 
-  use Tesla, only: [:get]
+  use Tesla, only: [:get], docs: false
   alias HN.{Item, User, Updates}
 
   @base_url_default "https://hacker-news.firebaseio.com/v0"
