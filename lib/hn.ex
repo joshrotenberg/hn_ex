@@ -49,6 +49,9 @@ defmodule HN do
     get("/item/" <> id <> ".json", opts: [decode_as: %Item{}])
   end
 
+  @doc """
+  Returns the item or raises an error.
+  """
   def item!(id) do
     case item(id) do
       {:ok, item} -> item
@@ -76,6 +79,9 @@ defmodule HN do
     get("/user/" <> name <> ".json", opts: [decode_as: %User{}])
   end
 
+  @doc """
+  Returns the user or raises an error.
+  """
   def user!(name) do
     case user(name) do
       {:ok, user} -> user
@@ -94,6 +100,9 @@ defmodule HN do
     get("/maxitem.json")
   end
 
+  @doc """
+  Returns the most recent item id or raises an error.
+  """
   def max_item! do
     case max_item() do
       {:ok, id} -> id
@@ -120,6 +129,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def new_stories, do: stories(:new)
+
+  @doc """
+  Returns the latest new new stories or raises an error.
+  """
   def new_stories!, do: stories!(:new)
 
   @doc """
@@ -130,6 +143,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def top_stories, do: stories(:top)
+
+  @doc """
+  Returns the latest top stories or raises an error.
+  """
   def top_stories!, do: stories!(:top)
 
   @doc """
@@ -140,6 +157,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def best_stories, do: stories(:best)
+
+  @doc """
+  Returns the latest best stories or raises an error.
+  """
   def best_stories!, do: stories!(:best)
 
   @doc """
@@ -150,6 +171,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def ask_stories, do: stories(:ask)
+
+  @doc """
+  Returns the latest ask stories or raises an error.
+  """
   def ask_stories!, do: stories!(:ask)
 
   @doc """
@@ -160,6 +185,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def show_stories, do: stories(:show)
+
+  @doc """
+  Returns the latest show stories or raises an error.
+  """
   def show_stories!, do: stories!(:show)
 
   @doc """
@@ -170,6 +199,10 @@ defmodule HN do
         {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
   """
   def job_stories, do: stories(:job)
+
+  @doc """
+  Returns the latest job stories or raises an error.
+  """
   def job_stories!, do: stories!(:job)
 
   @doc """
@@ -187,6 +220,9 @@ defmodule HN do
     get("/updates.json", opts: [decode_as: %Updates{}])
   end
 
+  @doc """
+  Returns the latest updates or raises an error.
+  """
   def updates! do
     case updates() do
       {:ok, update} -> update
