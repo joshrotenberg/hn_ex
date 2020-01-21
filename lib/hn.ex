@@ -52,11 +52,12 @@ defmodule HN do
   @doc """
   Returns the item or raises an error.
   """
+  def item!(id) when is_integer(id) do
+    get!("/item/" <> Integer.to_string(id) <> ".json", opts: [decode_as: %Item{}])
+  end
+
   def item!(id) do
-    case item(id) do
-      {:ok, item} -> item
-      {_, error} -> raise(RuntimeError, error)
-    end
+    get!("/item/" <> id <> ".json", opts: [decode_as: %Item{}])
   end
 
   @doc """
@@ -83,10 +84,7 @@ defmodule HN do
   Returns the user or raises an error.
   """
   def user!(name) do
-    case user(name) do
-      {:ok, user} -> user
-      {_, error} -> raise(RuntimeError, error)
-    end
+    get!("/user/" <> name <> ".json", opts: [decode_as: %User{}])
   end
 
   @doc """
@@ -104,10 +102,7 @@ defmodule HN do
   Returns the most recent item id or raises an error.
   """
   def max_item! do
-    case max_item() do
-      {:ok, id} -> id
-      {_, error} -> raise(RuntimeError, error)
-    end
+    get!("/maxitem.json")
   end
 
   defp stories(type) do
@@ -115,10 +110,7 @@ defmodule HN do
   end
 
   defp stories!(type) do
-    case stories(type) do
-      {:ok, stories} -> stories
-      {_, error} -> raise(RuntimeError, error)
-    end
+    get!("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
   end
 
   @doc """
@@ -224,9 +216,6 @@ defmodule HN do
   Returns the latest updates or raises an error.
   """
   def updates! do
-    case updates() do
-      {:ok, update} -> update
-      {_, error} -> raise(RuntimeError, error)
-    end
+    get!("/updates.json", opts: [decode_as: %Updates{}])
   end
 end
