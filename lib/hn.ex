@@ -8,6 +8,7 @@ defmodule HN do
   use Tesla, only: [:get], docs: false
   alias HN.{Item, User, Updates}
 
+  @story_types [:new, :top, :best, :ask, :show, :job]
   @base_url_default "https://hacker-news.firebaseio.com/v0"
 
   plug(Tesla.Middleware.BaseUrl, Application.get_env(:hn, :base_url, @base_url_default))
@@ -105,12 +106,29 @@ defmodule HN do
     get!("/maxitem.json")
   end
 
-  defp stories(type) do
-    get("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
+  @doc """
+  Fetch a list of story ids, passing in the type.
+  Possible types are: :new, :top, :best, :ask, :show or :job
+
+  ## Example
+        iex> HN.stories(:new)
+        {:ok, [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]}
+  """
+  def stories(type) do
+    case Enum.member?(@story_types, type) do
+      true -> get("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
+      false -> {:error, "Unknown story type '#{type}''"}
+    end
   end
 
-  defp stories!(type) do
-    get!("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
+  @doc """
+  Returns the latest stories for the given type, or raises an error.
+  """
+  def stories!(type) do
+    case Enum.member?(@story_types, type) do
+      true -> get!("/" <> Atom.to_string(type) <> "stories.json", opts: [decode_as: :json])
+      false -> raise(RuntimeError, "Unknown story type '#{type}'")
+    end
   end
 
   @doc """
@@ -123,7 +141,7 @@ defmodule HN do
   def new_stories, do: stories(:new)
 
   @doc """
-  Returns the latest new new stories or raises an error.
+  Returns the latest new stories or raises an error.
   """
   def new_stories!, do: stories!(:new)
 
