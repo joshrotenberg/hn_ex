@@ -93,21 +93,33 @@ defmodule HNTest do
 
   test "fetch stories" do
     {:ok, new_stories} = HN.new_stories()
+    {:ok, new_stories} = HN.stories(:new)
     assert new_stories === HN.new_stories!()
+    assert new_stories === HN.stories!(:new)
 
     {:ok, top_stories} = HN.top_stories()
+    {:ok, top_stories} = HN.stories(:top)
     assert top_stories === HN.top_stories!()
+    assert top_stories === HN.stories!(:top)
 
     {:ok, best_stories} = HN.best_stories()
+    {:ok, best_stories} = HN.stories(:best)
     assert best_stories === HN.best_stories!()
+    assert best_stories === HN.stories!(:best)
 
     {:ok, ask_stories} = HN.ask_stories()
+    {:ok, ask_stories} = HN.stories(:ask)
     assert ask_stories === HN.ask_stories!()
+    assert ask_stories === HN.stories!(:ask)
 
     {:ok, show_stories} = HN.show_stories()
+    {:ok, show_stories} = HN.stories(:show)
     assert show_stories === HN.show_stories!()
+    assert show_stories === HN.stories!(:show)
 
     {:ok, job_stories} = HN.job_stories()
+    {:ok, job_stories} = HN.stories(:job)
     assert job_stories === HN.job_stories!()
+    assert job_stories === HN.stories!(:job)
   end
 end
