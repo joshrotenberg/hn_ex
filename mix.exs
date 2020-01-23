@@ -38,7 +38,7 @@ defmodule HN.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.3.0"},
-      {:hackney, "~> 1.14.0"},
+      {:hackney, "~> 1.15.2"},
       {:poison, "~> 4.0"},
 
       # test
