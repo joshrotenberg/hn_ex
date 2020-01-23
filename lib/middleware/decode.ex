@@ -1,4 +1,6 @@
 defmodule HN.MiddleWare.Decode do
+  @moduledoc false
+
   @behaviour Tesla.Middleware
   alias Tesla.Env
 
