@@ -1,7 +1,7 @@
 defmodule HNTest do
   use ExUnit.Case, async: true
 
-  doctest HN
+  doctest HN, except: [fetch_stories: 2]
 
   setup do
     story = ~c({
@@ -41,6 +41,12 @@ defmodule HNTest do
         "https://hacker-news.firebaseio.com/v0/item/8863.json" ->
           %Tesla.Env{status: 200, body: story}
 
+        "https://hacker-news.firebaseio.com/v0/item/22058286.json" ->
+          %Tesla.Env{status: 200, body: story}
+
+        "https://hacker-news.firebaseio.com/v0/item/22054517.json" ->
+          %Tesla.Env{status: 200, body: story}
+
         "https://hacker-news.firebaseio.com/v0/user/jl.json" ->
           %Tesla.Env{status: 200, body: user}
 
@@ -73,6 +79,7 @@ defmodule HNTest do
     :ok
   end
 
+  @tag runnable: false
   test "fetch an item" do
     {:ok, item} = HN.item(8863)
     assert item.by == "dhouston"
