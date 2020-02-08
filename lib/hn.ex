@@ -236,4 +236,20 @@ defmodule HN do
   def updates! do
     get!("/updates.json", opts: [decode_as: %Updates{}])
   end
+
+  @doc """
+  Helper to fetch multiple stories in parellel using Task async/await.
+  Accepts an optional limit, which will limit the list of ids before fetching the items.
+
+  ## Example
+        iex> HN.top_stories |> HN.fetch_stories
+        [%HN.Item{
+           by: "dhouston",
+           dead: nil,
+           deleted: nil,
+           ...},
+          ...
+        ]
+  """
+  defdelegate fetch_stories(ids, limit \\ nil), to: HN.Helpers
 end
