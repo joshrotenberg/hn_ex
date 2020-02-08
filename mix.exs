@@ -11,7 +11,8 @@ defmodule HN.MixProject do
       test_coverage: [tool: ExCoveralls],
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
+      escript: escript()
     ]
   end
 
@@ -30,8 +31,12 @@ defmodule HN.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :bunt]
     ]
+  end
+
+  defp escript do
+    [main_module: HN.CLI]
   end
 
   # Run "mix help deps" to learn about dependencies.
@@ -40,6 +45,9 @@ defmodule HN.MixProject do
       {:tesla, "~> 1.3.0"},
       {:hackney, "~> 1.15.2"},
       {:poison, "~> 4.0"},
+
+      # cli
+      {:bunt, "~> 0.2.0"},
 
       # test
       {:excoveralls, "~> 0.10", only: :test},
