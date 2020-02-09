@@ -36,7 +36,7 @@ defmodule HN.MixProject do
   end
 
   defp escript do
-    [main_module: HN.CLI]
+    [main_module: HN.CLI, name: "hn"]
   end
 
   # Run "mix help deps" to learn about dependencies.
