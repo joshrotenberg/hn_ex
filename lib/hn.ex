@@ -11,6 +11,7 @@ defmodule HN do
   @story_types [:new, :top, :best, :ask, :show, :job]
   @base_url_default "https://hacker-news.firebaseio.com/v0"
 
+  adapter(Tesla.Adapter.Hackney)
   plug(Tesla.Middleware.BaseUrl, Application.get_env(:hn, :base_url, @base_url_default))
   plug(Tesla.Middleware.FollowRedirects, max_redirects: 3)
   plug(HN.MiddleWare.Decode)
