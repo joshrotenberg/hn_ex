@@ -26,6 +26,8 @@ defmodule HN.CLI do
   end
 
   defp puts_item(item) do
+    IO.inspect(item)
+
     [
       :bright,
       item.title,
