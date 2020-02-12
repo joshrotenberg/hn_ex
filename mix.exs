@@ -31,7 +31,8 @@ defmodule HN.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :bunt]
+      extra_applications: [:logger, :bunt],
+      mod: {HN.Application, []}
     ]
   end
 
@@ -45,6 +46,7 @@ defmodule HN.MixProject do
       {:tesla, "~> 1.3.0"},
       {:hackney, "~> 1.15.2"},
       {:poison, "~> 4.0"},
+      {:cachex, "~> 3.2.0"},
 
       # cli
       {:bunt, "~> 0.2.0"},
