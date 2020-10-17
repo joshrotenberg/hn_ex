@@ -12,7 +12,6 @@ defmodule HN.MixProject do
       description: description(),
       package: package(),
       deps: deps(),
-      escript: escript()
     ]
   end
 
@@ -31,32 +30,23 @@ defmodule HN.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :bunt],
-      mod: {HN.Application, []}
+      extra_applications: [:logger],
     ]
-  end
-
-  defp escript do
-    [main_module: HN.CLI, name: "hn"]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "~> 1.3.0"},
-      {:hackney, "~> 1.15.2"},
+      {:tesla, "~> 1.3.3"},
+      {:hackney, "~> 1.16"},
       {:poison, "~> 4.0"},
-      {:cachex, "~> 3.2.0"},
-
-      # cli
-      {:bunt, "~> 0.2.0"},
 
       # test
-      {:excoveralls, "~> 0.10", only: :test},
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.13.2", only: :test},
+      {:credo, "~> 1.4.1", only: [:dev, :test], runtime: false},
 
       # docs
-      {:ex_doc, "~> 0.21", only: :dev}
+      {:ex_doc, "~> 0.23", only: :dev}
     ]
   end
 end

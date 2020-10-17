@@ -15,7 +15,6 @@ defmodule HN do
   plug(Tesla.Middleware.BaseUrl, Application.get_env(:hn, :base_url, @base_url_default))
   plug(Tesla.Middleware.FollowRedirects, max_redirects: 3)
   plug(HN.MiddleWare.Decode)
-  plug(HN.MiddleWare.Cache, "doof")
 
   @doc """
   Fetch an item by id. Returns {:ok, %HN.Item{}}.
