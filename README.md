@@ -1,5 +1,8 @@
 # HN
 
+![Build Status](https://github.com/joshrotenberg/hn_ex/workflows/Elixir%20CI/badge.svg)
+[![Hex pm](http://img.shields.io/hexpm/v/hn_ex.svg?style=flat)](https://hex.pm/packages/hn_ex)
+
 A simple Hacker News API client in Elixir.
 
 See https://hexdocs.pm/hn_ex/HN.html for full documentation.
