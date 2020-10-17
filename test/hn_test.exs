@@ -1,8 +1,6 @@
 defmodule HNTest do
   use ExUnit.Case, async: true
 
-  doctest HN, except: [fetch_stories: 2]
-
   setup do
     story = ~c({
         "by" : "dhouston",
