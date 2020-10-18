@@ -1,14 +1,14 @@
 defmodule HN.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/joshrotenberg/hn_ex"
+
   def project do
     [
       app: :hn_ex,
       version: "0.2.2",
       elixir: "~> 1.9",
-      source_url: "https://github.com/joshrotenberg/hn_ex",
       start_permanent: Mix.env() == :prod,
-      test_coverage: [tool: ExCoveralls],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -18,7 +18,8 @@ defmodule HN.MixProject do
       ],
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -30,18 +31,16 @@ defmodule HN.MixProject do
     [
       maintainers: ["Josh Rotenberg"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/joshrotenberg/hn_ex"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:tesla, "~> 1.3.3"},
@@ -54,6 +53,13 @@ defmodule HN.MixProject do
 
       # docs
       {:ex_doc, "~> 0.23", only: :dev}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "HN",
+      source_url: @source_url,
     ]
   end
 end
