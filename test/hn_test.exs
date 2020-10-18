@@ -1,6 +1,8 @@
 defmodule HNTest do
   use ExUnit.Case, async: true
 
+  import Tesla.Mock
+
   setup do
     story = ~c({
         "by" : "dhouston",
@@ -34,7 +36,7 @@ defmodule HNTest do
       "items": [22058286, 22054517, 22055774, 22059007, 22058838, 22056363, 22056764],
       "profiles": ["nathan_compton", "chasd00", "yarapavan", "cagenut"]})
 
-    Tesla.Mock.mock(fn env ->
+    mock(fn env ->
       case env.url do
         "https://hacker-news.firebaseio.com/v0/item/8863.json" ->
           %Tesla.Env{status: 200, body: story}
@@ -77,12 +79,14 @@ defmodule HNTest do
     :ok
   end
 
-  @tag runnable: false
   test "fetch an item" do
     {:ok, item} = HN.item(8863)
     assert item.by == "dhouston"
     assert item.id == 8863
     assert item === HN.item!("8863")
+
+    assert HN.item(8863) == HN.item("8863")
+    assert HN.item!(8863) == HN.item!("8863")
   end
 
   test "fetch a user" do
@@ -94,6 +98,7 @@ defmodule HNTest do
   test "fetch the max item id" do
     {:ok, max_item} = HN.max_item()
     assert max_item === HN.max_item!()
+    assert max_item === "22059135"
   end
 
   test "fetch stories" do
@@ -132,5 +137,29 @@ defmodule HNTest do
 
     {:ok, job_stories} = HN.stories(:job)
     assert job_stories === HN.stories!(:job)
+
+    assert new_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+    assert top_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+    assert best_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+    assert ask_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+    assert show_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+    assert job_stories === [22057737,22055976,22057989,22057576,22054163,22055867,22057173,22054600,22041741]
+  end
+
+  test "fetch updates" do
+    {:ok, updates} = HN.updates()
+    assert updates === HN.updates!()
+
+    assert updates.items == [
+             22_058_286,
+             22_054_517,
+             22_055_774,
+             22_059_007,
+             22_058_838,
+             22_056_363,
+             22_056_764
+           ]
+
+    assert updates.profiles == ["nathan_compton", "chasd00", "yarapavan", "cagenut"]
   end
 end
