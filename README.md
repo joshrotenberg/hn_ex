@@ -1,42 +1,47 @@
 # HN
 
-![Build Status](https://github.com/joshrotenberg/hn_ex/workflows/Elixir%20CI/badge.svg)
-[![Hex pm](http://img.shields.io/hexpm/v/hn_ex.svg?style=flat)](https://hex.pm/packages/hn_ex)
+<!-- MDOC !-->
 
-A simple Hacker News API client in Elixir.
+[![github.com](https://github.com/joshrotenberg/hn_ex/workflows/Elixir%20CI/badge.svg)](https://github.com/joshrotenberg/hn_ex/actions)
+[![hex.pm](https://img.shields.io/hexpm/v/hn_ex.svg)](https://hex.pm/packages/hn_ex)
+[![hex.pm](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/hn_ex)
+[![hex.pm](https://img.shields.io/hexpm/dt/hn_ex.svg)](https://hex.pm/packages/hn_ex)
+[![hex.pm](https://img.shields.io/hexpm/l/hn_ex.svg)](https://hex.pm/packages/hn_ex)
+[![github.com](https://img.shields.io/github/last-commit/joshrotenberg/hn_ex.svg)](https://github.com/joshrotenberg/hn_ex/commits/master)
 
-See https://hexdocs.pm/hn_ex/HN.html for full documentation.
+A simple Hacker News API client in Elixir based on the [official Firebase
+API](https://github.com/HackerNews/API).
 
-See https://github.com/HackerNews/API for a thorough description of the API and the fields returned from the various calls.
+## Usage
 
-##  API Calls
+Each endpoint (see API docs above) has a corresponding function call (and
+unsafe version), for example:
 
-Each endpoint (see API docs above) has a corresponding function call (and unsafe version), for example:
+```elixir
+iex> HN.item(8863) # argument can be an integer or a string
+{:ok, %HN.Item{
+     by: "dhouston",
+     dead: nil,
+     deleted: nil,
+     descendants: 71,
+     ...
+}}
 
-```
-      iex> HN.item(8863) # argument can be an integer or a string
-      {:ok, %HN.Item{
-           by: "dhouston",
-           dead: nil,
-           deleted: nil,
-           descendants: 71,
-           ...
-      }}
-      or 
-      iex> HN.item!(8863) 
-       %HN.Item{
-           by: "dhouston",
-           dead: nil,
-           deleted: nil,
-           descendants: 71,
-           ...
-      }}
+# or
+
+iex> HN.item!(8863)
+ %HN.Item{
+     by: "dhouston",
+     dead: nil,
+     deleted: nil,
+     descendants: 71,
+     ...
+}}
 ```
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `hn_ex` to your list of dependencies in `mix.exs`:
+Add `hn_ex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -45,8 +50,3 @@ def deps do
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/hn_ex](https://hexdocs.pm/hn_ex).
-
