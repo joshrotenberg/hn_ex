@@ -9,9 +9,16 @@ defmodule HN.MixProject do
       source_url: "https://github.com/joshrotenberg/hn_ex",
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       description: description(),
       package: package(),
-      deps: deps(),
+      deps: deps()
     ]
   end
 
@@ -30,7 +37,7 @@ defmodule HN.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger]
     ]
   end
 
